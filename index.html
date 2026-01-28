@@ -4,24 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>مختبر المبدع الصغير 🎨🤖</title>
-    <!-- خطوط Google Fonts -->
+    
+    <!-- حل مشكلة الخطوط باستخدام Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;700&family=Comic+Neue:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Changa:wght@400;700&display=swap" rel="stylesheet">
+    
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- ملف الأنماط -->
+    
+    <!-- الأنماط -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- الإشعارات -->
+    <!-- إشعارات -->
     <div class="notification" id="notification">
         <i class="fas fa-check-circle notification-icon"></i>
         <span id="notificationText"></span>
     </div>
-
+    
     <!-- المساعد الذكي -->
-    <div class="chat-assistant">
+    <div class="chat-assistant" id="chatAssistant">
         <div class="chat-toggle" id="chatToggle">
             <i class="fas fa-robot"></i>
         </div>
@@ -47,8 +50,8 @@
             </div>
         </div>
     </div>
-
-    <!-- الرأس -->
+    
+    <!-- رأس الموقع -->
     <header>
         <div class="container">
             <nav>
@@ -61,7 +64,8 @@
                     <i class="fas fa-bars"></i>
                 </button>
                 
-                <ul class="nav-links" id="navLinks">
+                <!-- قائمة التنقل - ستظهر بعد التسجيل -->
+                <ul class="nav-links" id="navLinks" style="display: none;">
                     <li><a href="#" class="nav-link active" data-page="home"><i class="fas fa-home"></i> الرئيسية</a></li>
                     <li><a href="#" class="nav-link" data-page="think"><i class="fas fa-brain"></i> أفكر 🧠</a></li>
                     <li><a href="#" class="nav-link" data-page="design"><i class="fas fa-paint-brush"></i> أصمم 🎨</a></li>
@@ -83,7 +87,7 @@
                     <p class="english-font">Here we learn, think, design, and use AI in a fun way</p>
                     <p>هنا نتعلم، نفكر، نصمم، ونستخدم الذكاء الاصطناعي بطريقة ممتعة</p>
                     
-                    <!-- قسم التسجيل -->
+                    <!-- قسم تسجيل الطفل -->
                     <div id="registrationSection" class="registration-section">
                         <h2>سجل اسمك لتبدأ الرحلة!</h2>
                         <form class="registration-form" id="registrationForm">
@@ -97,7 +101,7 @@
                         </form>
                     </div>
                     
-                    <!-- ملف الطفل -->
+                    <!-- عرض ملف الطفل بعد التسجيل -->
                     <div id="userProfile" class="user-profile" style="display: none;">
                         <div class="profile-pic" id="profilePic"></div>
                         <div class="profile-info">
@@ -128,8 +132,7 @@
             </div>
             
             <div class="container">
-                <!-- باقي محتوى الصفحة الرئيسية -->
-                <div class="features">
+                <div class="features" id="featuresSection" style="display: none;">
                     <div class="feature-card">
                         <i class="fas fa-brain"></i>
                         <h3>أفكر 🧠</h3>
@@ -155,50 +158,69 @@
                     </div>
                 </div>
                 
-                <!-- قسم الهدف العام وشريط التقدم ... -->
-                <!-- لقد قمت باختصار المحتوى لتركيز الإجابة -->
+                <!-- شريط التقدم -->
+                <div id="progressSection" style="margin-top: 3rem; text-align: center; display: none;">
+                    <h3>تقدمك في الرحلة</h3>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="progressBar"></div>
+                    </div>
+                    <p id="progressText">لقد أكملت <span id="progressPercent">0%</span> من الرحلة!</p>
+                </div>
             </div>
         </section>
 
-        <!-- صفحات أخرى: أفكر، أصمم، إلخ -->
-        <!-- سأقوم بوضع الهيكل الأساسي فقط -->
+        <!-- صفحة أفكر -->
         <section id="think" class="page-section">
             <div class="container">
                 <h2>أفكر 🧠</h2>
                 <p style="font-size: 1.2rem; margin-bottom: 2rem;">30 لعبة تفكير متنوعة لتنمية الذكاء والتفكير المنطقي!</p>
-                <!-- محتوى صفحة أفكر -->
+                
+                <!-- مستويات الصعوبة -->
+                <div class="thinking-levels">
+                    <button class="level-btn level-1" onclick="showLevel(1)">المستوى 1: سهل 🟢</button>
+                    <button class="level-btn level-2" onclick="showLevel(2)">المستوى 2: متوسط 🔵</button>
+                    <button class="level-btn level-3" onclick="showLevel(3)">المستوى 3: صعب 🟣</button>
+                    <button class="level-btn level-4" onclick="showLevel(4)">المستوى 4: متقدم 🟠</button>
+                </div>
+                
+                <!-- محتوى الألعاب - سيتم تعبئته بواسطة JavaScript -->
+                <div id="gamesContent"></div>
             </div>
         </section>
 
+        <!-- صفحة أصمم -->
         <section id="design" class="page-section">
             <div class="container">
                 <h2>أصمم 🎨</h2>
                 <p style="font-size: 1.2rem; margin-bottom: 2rem;">30 مهمة تصميم متدرجة الصعوبة مع تقييم فوري!</p>
-                <!-- محتوى صفحة أصمم -->
+                <div id="designContent"></div>
             </div>
         </section>
 
+        <!-- صفحة مهمة الذكاء الاصطناعي -->
         <section id="ai" class="page-section">
             <div class="container">
                 <h2>مهمة الذكاء الاصطناعي 🤖</h2>
                 <p style="font-size: 1.2rem; margin-bottom: 2rem;">30 مهمة لتعلم استخدام الذكاء الاصطناعي بشكل مفيد!</p>
-                <!-- محتوى صفحة الذكاء الاصطناعي -->
+                <div id="aiContent"></div>
             </div>
         </section>
 
+        <!-- صفحة المشاريع -->
         <section id="projects" class="page-section">
             <div class="container">
                 <h2>المشاريع 🚀</h2>
                 <p style="font-size: 1.2rem; margin-bottom: 2rem;">4 مشاريع أسبوعية كاملة تدمج جميع المهارات!</p>
-                <!-- محتوى صفحة المشاريع -->
+                <div id="projectsContent"></div>
             </div>
         </section>
 
+        <!-- صفحة الإنجازات -->
         <section id="achievements" class="page-section">
             <div class="container">
                 <h2>إنجازاتي 🏆</h2>
                 <p style="font-size: 1.2rem; margin-bottom: 2rem;">سجل تقدمك وإنجازاتك خلال الرحلة!</p>
-                <!-- محتوى صفحة الإنجازات -->
+                <div id="achievementsContent"></div>
             </div>
         </section>
     </main>
@@ -213,22 +235,12 @@
                 </div>
                 
                 <div class="footer-section">
-                    <h3>روابط سريعة</h3>
-                    <ul class="footer-links">
-                        <li><a href="#" data-page="home"><i class="fas fa-home"></i> الرئيسية</a></li>
-                        <li><a href="#" data-page="think"><i class="fas fa-brain"></i> أفكر 🧠</a></li>
-                        <li><a href="#" data-page="design"><i class="fas fa-paint-brush"></i> أصمم 🎨</a></li>
-                        <li><a href="#" data-page="ai"><i class="fas fa-robot"></i> مهمة الذكاء الاصطناعي 🤖</a></li>
-                        <li><a href="#" data-page="projects"><i class="fas fa-rocket"></i> المشاريع 🚀</a></li>
-                        <li><a href="#" data-page="achievements"><i class="fas fa-trophy"></i> الإنجازات 🏆</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h3>الأدوات المستخدمة</h3>
-                    <ul class="footer-links">
-                        <li><a href="https://www.canva.com/" target="_blank"><i class="fab fa-canva"></i> Canva للتصميم</a></li>
-                        <li><a href="https://gemini.google.com/" target="_blank"><i class="fas fa-robot"></i> Gemini للذكاء الاصطناعي</a></li>
+                    <h3>نصائح للاستخدام الآمن</h3>
+                    <ul>
+                        <li>استخدم الموقع بإشراف شخص كبير</li>
+                        <li>الوقت اليومي الموصى به: 30-40 دقيقة</li>
+                        <li>احرص على أخذ فترات راحة</li>
+                        <li>شارك إنجازاتك مع العائلة</li>
                     </ul>
                 </div>
             </div>
@@ -240,7 +252,7 @@
         </div>
     </footer>
 
-    <!-- ملف الجافاسكريبت -->
+    <!-- ملف JavaScript -->
     <script src="script.js"></script>
 </body>
 </html>
