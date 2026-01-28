@@ -1,64 +1,70 @@
-let currentUser = loadData('currentUser');
+let user = JSON.parse(localStorage.getItem("kcl-user")) || null;
 
-const registrationSection = document.getElementById('registrationSection');
-const userProfile = document.getElementById('userProfile');
-const navMenu = document.getElementById('navMenu');
-const welcomeMessage = document.getElementById('welcomeMessage');
-const pointsValue = document.getElementById('pointsValue');
-const userLevel = document.getElementById('userLevel');
+const register = document.getElementById("register");
+const dashboard = document.getElementById("dashboard");
+const welcome = document.getElementById("welcome");
+const pointsEl = document.getElementById("points");
+const content = document.getElementById("content");
 
-function registerChild() {
-    const name = document.getElementById('childName').value.trim();
-    if (!name) return notify("اكتب اسمك أولاً");
+function start() {
+  const name = document.getElementById("childName").value.trim();
+  if (!name) return alert("اكتب اسمك أولاً 😊");
 
-    currentUser = {
-        name,
-        points: 0,
-        level: "مبتدئ"
-    };
-
-    saveData('currentUser', currentUser);
-    loadUser();
+  user = { name, points: 0 };
+  save();
+  load();
 }
 
-function loadUser() {
-    if (!currentUser) return;
+function load() {
+  if (!user) return;
 
-    registrationSection.style.display = "none";
-    userProfile.style.display = "block";
-    navMenu.style.display = "flex";
+  register.classList.add("hidden");
+  dashboard.classList.remove("hidden");
 
-    welcomeMessage.textContent = `مرحبًا ${currentUser.name} 👋`;
-    pointsValue.textContent = currentUser.points;
-    userLevel.textContent = currentUser.level;
-
-    renderPages();
+  welcome.textContent = `مرحبًا ${user.name} 👋`;
+  pointsEl.textContent = user.points;
 }
 
-function renderPages() {
-    document.getElementById('think').innerHTML =
-        `<h2>🧠 أفكر</h2><ul>${thinkGames.map(g => `<li>${g}</li>`).join('')}</ul>`;
-
-    document.getElementById('design').innerHTML =
-        `<h2>🎨 أصمم</h2><ul>${designTasks.map(t => `<li>${t}</li>`).join('')}</ul>`;
-
-    document.getElementById('ai').innerHTML =
-        `<h2>🤖 ذكاء اصطناعي</h2><ul>${aiTasks.map(t => `<li>${t}</li>`).join('')}</ul>`;
-
-    document.getElementById('projects').innerHTML =
-        `<h2>🚀 المشاريع</h2><ul>${projects.map(p => `<li>${p}</li>`).join('')}</ul>`;
+function save() {
+  localStorage.setItem("kcl-user", JSON.stringify(user));
 }
 
-function showPage(id) {
-    document.querySelectorAll('.page-section').forEach(s => s.style.display = 'none');
-    document.getElementById(id).style.display = 'block';
+function openSection(type) {
+  let html = "";
+
+  if (type === "think") {
+    html = `
+      <h3>🧠 مهمة تفكير</h3>
+      <p>كم ناتج 5 + 3 ؟</p>
+      <button onclick="complete()">الإجابة: 8</button>
+    `;
+  }
+
+  if (type === "design") {
+    html = `
+      <h3>🎨 مهمة تصميم</h3>
+      <p>صمّم بطاقة تهنئة في Canva</p>
+      <button onclick="complete()">أنجزت التصميم</button>
+    `;
+  }
+
+  if (type === "ai") {
+    html = `
+      <h3>🤖 مهمة ذكاء اصطناعي</h3>
+      <p>اطلب من الذكاء الاصطناعي قصة قصيرة</p>
+      <a href="https://gemini.google.com" target="_blank">اذهب إلى Gemini</a><br><br>
+      <button onclick="complete()">أنجزت المهمة</button>
+    `;
+  }
+
+  content.innerHTML = html;
 }
 
-function notify(msg) {
-    const n = document.getElementById('notification');
-    n.textContent = msg;
-    n.style.display = 'block';
-    setTimeout(() => n.style.display = 'none', 3000);
+function complete() {
+  user.points += 10;
+  pointsEl.textContent = user.points;
+  save();
+  alert("🎉 أحسنت! حصلت على 10 نقاط");
 }
 
-loadUser();
+load();
