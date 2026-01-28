@@ -1,1 +1,71 @@
+@font-face {
+    font-family: 'Vexa';
+    src: url('../assets/fonts/Vexa.woff2') format('woff2');
+}
 
+@font-face {
+    font-family: 'Musket';
+    src: url('../assets/fonts/Musket.woff2') format('woff2');
+}
+
+body {
+    margin: 0;
+    font-family: 'Vexa', Arial;
+    background: #f5f7fb;
+    text-align: center;
+}
+
+h1, h2 {
+    font-family: 'Musket';
+}
+
+.main-header {
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    color: white;
+    padding: 2rem;
+}
+
+input {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    width: 200px;
+}
+
+button {
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: none;
+    background: #2575fc;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    background: #6a11cb;
+}
+
+.main-nav {
+    margin: 1.5rem 0;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.page-section {
+    display: none;
+    padding: 2rem;
+}
+
+.notification {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 20px;
+    display: none;
+}
