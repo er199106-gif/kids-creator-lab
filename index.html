@@ -1,56 +1,65 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <title>Kids Creator Lab</title>
-
-    <!-- الخطوط -->
-    <link rel="stylesheet" href="css/style.css">
-
-    <!-- أيقونات -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <title>Kids Creator Lab</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<header class="main-header">
-    <h1>🎨 Kids Creator Lab</h1>
-    <p>رحلة تعلم – تفكير – تصميم – ذكاء اصطناعي</p>
-</header>
+<div class="app">
 
-<!-- التسجيل -->
-<section id="registrationSection">
-    <h2>ابدأ رحلتك 🚀</h2>
-    <input type="text" id="childName" placeholder="اكتب اسمك">
-    <button onclick="registerChild()">ابدأ</button>
-</section>
+  <!-- شاشة التسجيل -->
+  <section id="loginScreen" class="screen active">
+    <h1>👋 أهلاً بالمبدع الصغير</h1>
+    <p>اكتب اسمك وابدأ رحلتك</p>
+    <input id="childName" placeholder="اسمك هنا">
+    <button onclick="startJourney()">ابدأ 🚀</button>
+  </section>
 
-<!-- ملف المستخدم -->
-<section id="userProfile" style="display:none;">
-    <h2 id="welcomeMessage"></h2>
-    <p>⭐ النقاط: <span id="pointsValue">0</span></p>
-    <p>🎯 المستوى: <span id="userLevel">مبتدئ</span></p>
-</section>
+  <!-- التطبيق -->
+  <section id="mainApp" class="screen">
+    
+    <header>
+      <h2 id="welcomeText"></h2>
+      <div class="stats">
+        ⭐ <span id="points">0</span> نقطة
+      </div>
+    </header>
 
-<!-- التنقل -->
-<nav class="main-nav" id="navMenu" style="display:none;">
-    <button onclick="showPage('think')">🧠 أفكر</button>
-    <button onclick="showPage('design')">🎨 أصمم</button>
-    <button onclick="showPage('ai')">🤖 ذكاء اصطناعي</button>
-    <button onclick="showPage('projects')">🚀 المشاريع</button>
-</nav>
+    <nav>
+      <button onclick="showPage('think')">🧠 أفكر</button>
+      <button onclick="showPage('design')">🎨 أصمم</button>
+      <button onclick="showPage('ai')">🤖 ذكاء اصطناعي</button>
+    </nav>
 
-<!-- الصفحات -->
-<section id="think" class="page-section"></section>
-<section id="design" class="page-section"></section>
-<section id="ai" class="page-section"></section>
-<section id="projects" class="page-section"></section>
+    <main>
+      <div id="think" class="page">
+        <h3>🧠 أفكر</h3>
+        <div class="card" onclick="completeTask('think')">
+          حل لغز بسيط
+        </div>
+      </div>
 
-<!-- الإشعارات -->
-<div id="notification" class="notification"></div>
+      <div id="design" class="page">
+        <h3>🎨 أصمم</h3>
+        <div class="card" onclick="completeTask('design')">
+          تصميم بوستر في Canva
+        </div>
+      </div>
 
-<script src="js/storage.js"></script>
-<script src="js/data.js"></script>
+      <div id="ai" class="page">
+        <h3>🤖 ذكاء اصطناعي</h3>
+        <div class="card" onclick="completeTask('ai')">
+          اسأل Gemini سؤالًا ذكيًا
+        </div>
+      </div>
+    </main>
+
+  </section>
+
+</div>
+
 <script src="js/app.js"></script>
-
 </body>
 </html>
