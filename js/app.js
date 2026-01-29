@@ -1,4 +1,4 @@
-let user = JSON.parse(localStorage.getItem("kcl-user")) || null;
+let user = JSON.parse(localStorage.getItem("kcl-user"));
 
 const register = document.getElementById("register");
 const dashboard = document.getElementById("dashboard");
@@ -6,11 +6,19 @@ const welcome = document.getElementById("welcome");
 const pointsEl = document.getElementById("points");
 const content = document.getElementById("content");
 
+const LEVEL_POINTS = [0, 30, 70, 120];
+
 function start() {
   const name = document.getElementById("childName").value.trim();
   if (!name) return alert("اكتب اسمك أولاً 😊");
 
-  user = { name, points: 0 };
+  user = {
+    name,
+    points: 0,
+    level: 1,
+    completed: []
+  };
+
   save();
   load();
 }
@@ -21,7 +29,7 @@ function load() {
   register.classList.add("hidden");
   dashboard.classList.remove("hidden");
 
-  welcome.textContent = `مرحبًا ${user.name} 👋`;
+  welcome.textContent = `مرحبًا ${user.name} 👋 (المستوى ${user.level})`;
   pointsEl.textContent = user.points;
 }
 
@@ -30,41 +38,71 @@ function save() {
 }
 
 function openSection(type) {
-  let html = "";
+  let tasks = [];
 
   if (type === "think") {
-    html = `
-      <h3>🧠 مهمة تفكير</h3>
-      <p>كم ناتج 5 + 3 ؟</p>
-      <button onclick="complete()">الإجابة: 8</button>
-    `;
+    tasks = [
+      { id: "t1", text: "5 + 3 = ؟", answer: "8", level: 1 },
+      { id: "t2", text: "10 - 4 = ؟", answer: "6", level: 2 },
+      { id: "t3", text: "3 × 3 = ؟", answer: "9", level: 3 }
+    ];
   }
 
   if (type === "design") {
-    html = `
-      <h3>🎨 مهمة تصميم</h3>
-      <p>صمّم بطاقة تهنئة في Canva</p>
-      <button onclick="complete()">أنجزت التصميم</button>
-    `;
+    tasks = [
+      { id: "d1", text: "صمّم بطاقة تهنئة", level: 1 },
+      { id: "d2", text: "صمّم بوستر تعليمي", level: 2 },
+      { id: "d3", text: "صمّم منشور إنستغرام", level: 3 }
+    ];
   }
 
   if (type === "ai") {
-    html = `
-      <h3>🤖 مهمة ذكاء اصطناعي</h3>
-      <p>اطلب من الذكاء الاصطناعي قصة قصيرة</p>
-      <a href="https://gemini.google.com" target="_blank">اذهب إلى Gemini</a><br><br>
-      <button onclick="complete()">أنجزت المهمة</button>
-    `;
+    tasks = [
+      { id: "a1", text: "اطلب قصة قصيرة", level: 1 },
+      { id: "a2", text: "اسأل عن حيوان مفضل", level: 2 },
+      { id: "a3", text: "اطلب فكرة لعبة", level: 3 }
+    ];
   }
+
+  renderTasks(tasks, type);
+}
+
+function renderTasks(tasks, type) {
+  let html = `<h3>${type === "think" ? "🧠 أفكر" : type === "design" ? "🎨 أصمم" : "🤖 ذكاء اصطناعي"}</h3>`;
+
+  tasks.forEach(task => {
+    const locked = task.level > user.level;
+    const done = user.completed.includes(task.id);
+
+    html += `
+      <div class="task ${locked ? "locked" : ""}">
+        <p>${task.text}</p>
+        ${
+          locked
+            ? `<span>🔒 مقفل</span>`
+            : done
+            ? `<span>✅ منجز</span>`
+            : `<button onclick="completeTask('${task.id}', ${task.level})">أنجزت</button>`
+        }
+      </div>
+    `;
+  });
 
   content.innerHTML = html;
 }
 
-function complete() {
-  user.points += 10;
-  pointsEl.textContent = user.points;
-  save();
-  alert("🎉 أحسنت! حصلت على 10 نقاط");
-}
+function completeTask(id, level) {
+  if (user.completed.includes(id)) return;
 
-load();
+  user.completed.push(id);
+  user.points += 10;
+
+  if (user.points >= LEVEL_POINTS[user.level]) {
+    user.level++;
+    alert(`🎉 ممتاز! وصلت للمستوى ${user.level}`);
+  }
+
+  save();
+  load();
+  content.innerHTML = "<p>✅ تم حفظ التقدم</p>";
+}
