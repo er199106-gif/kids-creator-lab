@@ -1,46 +1,0 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-  <meta charset="UTF-8">
-  <title>Kids Creator Lab</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-<div id="app">
-
-  <!-- شاشة التسجيل -->
-  <section id="register" class="card">
-    <h1>👋 أهلاً بالمبدع الصغير</h1>
-    <p>اكتب اسمك وابدأ رحلة الإبداع 🚀</p>
-
-    <input type="text" id="childName" placeholder="اسمك هنا">
-    <button onclick="start()">ابدأ الرحلة</button>
-  </section>
-
-  <!-- لوحة الطفل -->
-  <section id="dashboard" class="hidden">
-
-    <header class="top-bar">
-      <h2 id="welcome"></h2>
-      <div class="points">⭐ <span id="points">0</span></div>
-    </header>
-
-    <div class="menu">
-      <div class="menu-card" onclick="openSection('think')">🧠 أفكر</div>
-      <div class="menu-card" onclick="openSection('design')">🎨 أصمم</div>
-      <div class="menu-card" onclick="openSection('ai')">🤖 ذكاء اصطناعي</div>
-    </div>
-
-    <section id="content" class="card small-card">
-      <p>اختر قسمًا للبدء 👆</p>
-    </section>
-
-  </section>
-
-</div>
-
-<script src="app.js"></script>
-</body>
-</html>
