@@ -78,3 +78,14 @@ header {
   border-radius: 20px;
   font-weight: bold;
 }
+.task {
+  background: #f9f9ff;
+  padding: 1rem;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+
+.task.locked {
+  opacity: 0.5;
+}
+
